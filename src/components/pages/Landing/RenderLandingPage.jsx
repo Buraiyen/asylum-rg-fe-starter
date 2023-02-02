@@ -5,6 +5,7 @@ import '../../../styles/RenderLandingPage.less';
 import { Button } from 'antd';
 import { useHistory } from 'react-router-dom';
 import GraphsSection from './GraphsSection';
+import Insights from './Insights';
 // for the purposes of testing PageNav
 // import PageNav from '../../common/PageNav';
 
@@ -60,6 +61,7 @@ function RenderLandingPage(props) {
       <div>
         {/* Bottom Section: Add code here for the graphs section for your first ticket */}
         {/* <div className="bottom-section">*/}
+        <Insights />
         <p onClick={() => scrollToTop()} className="back-to-top">
           Back To Top ^
         </p>
