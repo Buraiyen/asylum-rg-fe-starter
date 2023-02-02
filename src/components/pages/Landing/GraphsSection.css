@@ -2,3 +2,38 @@
   display: flex;
   justify-content: space-evenly;
 }
+
+div {
+  border: 1px solid red;
+}
+
+.graph-img__bar {
+  height: 170px;
+  width: 320px;
+  margin-bottom: 10%;
+}
+
+.graph-img__pie {
+  height: 175px;
+  width: 200px;
+  margin-bottom: 7%;
+  margin-left: -15px;
+}
+
+.graph-img__pie {
+  height: 175px;
+  width: 200px;
+  margin-bottom: 7%;
+  margin-left: -15px;
+}
+
+.graph-img__line {
+  height: 165px;
+  width: 300px;
+  margin-bottom: 10%;
+}
+
+.chart-title {
+  text-align: center;
+  font-size: 1.4rem;
+}
