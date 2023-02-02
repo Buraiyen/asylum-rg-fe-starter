@@ -7,3 +7,23 @@
   font-family: 'moneta';
   font-size: 3.2rem;
 }
+
+.insights-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.insight {
+  width: 23%;
+}
+
+.stats {
+  font-size: 2rem;
+  font-family: 'moneta';
+}
+
+.description {
+  font-family: 'acumin';
+  font-size: 1.2rem;
+}
