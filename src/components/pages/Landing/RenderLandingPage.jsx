@@ -30,7 +30,6 @@ function RenderLandingPage(props) {
         </div>
       </div>
 
-      {/* Graphs Section: Add code here for the graphs section for your first ticket */}
       <GraphsSection />
       <div className="view-more-data-btn-container">
         <Button
@@ -59,8 +58,6 @@ function RenderLandingPage(props) {
         </div>
       </div>
       <div>
-        {/* Bottom Section: Add code here for the graphs section for your first ticket */}
-        {/* <div className="bottom-section">*/}
         <Insights />
         <p onClick={() => scrollToTop()} className="back-to-top">
           Back To Top ^
