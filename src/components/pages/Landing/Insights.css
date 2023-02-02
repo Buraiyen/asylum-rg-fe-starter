@@ -12,6 +12,7 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  flex-direction: row;
 }
 
 .insight {
@@ -26,4 +27,13 @@
 .description {
   font-family: 'acumin';
   font-size: 1.2rem;
+}
+
+@media (max-width: 800px) {
+  .insights-container {
+    flex-direction: column;
+  }
+  .insight {
+    width: 55%;
+  }
 }
