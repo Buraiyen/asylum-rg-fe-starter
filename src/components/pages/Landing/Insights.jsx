@@ -1,6 +1,10 @@
+import { Button } from 'antd';
 import './Insights.css';
 
 function Insights() {
+  const externalUrl =
+    'https://humanrightsfirst.org/resource/uscis-records-reveal-systemic-disparities-asylum-decisions';
+
   return (
     <section className="bottom-section">
       <h2 className="title">Systemic Disparity Insights</h2>
@@ -29,6 +33,13 @@ function Insights() {
           </p>
         </div>
       </div>
+      <Button
+        type="default"
+        style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
+        onClick={() => window.location.assign(externalUrl)}
+      >
+        Read More
+      </Button>
     </section>
   );
 }
