@@ -6,18 +6,24 @@ import GrantRatesOverTimeImg from '../../../styles/Images/line-graph-no-text.png
 function GraphsSection() {
   return (
     <section className="graphs-section">
-      <img
-        src={GrantRatesByOfficeImg}
-        alt="Bar chart of grant rates by office"
-      />
-      <img
-        src={GrantRatesByNationalityImg}
-        alt="Pie chart of grant rates by office"
-      />
-      <img
-        src={GrantRatesOverTimeImg}
-        alt="Line chart of grant rates over time"
-      />
+      <div>
+        <img
+          src={GrantRatesByOfficeImg}
+          alt="Bar chart of grant rates by office"
+        />
+      </div>
+      <div>
+        <img
+          src={GrantRatesByNationalityImg}
+          alt="Pie chart of grant rates by office"
+        />
+      </div>
+      <div>
+        <img
+          src={GrantRatesOverTimeImg}
+          alt="Line chart of grant rates over time"
+        />
+      </div>
     </section>
   );
 }
