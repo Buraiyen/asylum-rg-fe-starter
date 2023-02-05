@@ -6,6 +6,7 @@ import reducer from '../state/reducers';
 import TimeSeriesAll from '../components/pages/DataVisualizations/Graphs/TimeSeriesAll';
 import TimeSeriesSingleOffice from '../components/pages/DataVisualizations/Graphs/TimeSeriesSingleOffice';
 import CitizenshipMapAll from '../components/pages/DataVisualizations/Graphs/CitizenshipMapAll';
+import CitizenshipMapSingleOffice from '../components/pages/DataVisualizations/Graphs/CitizenshipMapSingleOffice';
 
 describe('TimeSeries test suite', () => {
   beforeEach(() => {
@@ -74,6 +75,19 @@ describe('CitizenshipMap test suite', () => {
     );
     expect(title.textContent).toEqual(
       "Showing: Rates of 'granted' case decision by nationality of origin, for all offices"
+    );
+  });
+
+  test('<CitizenshipMapSingleOffice /> renders correctly when passing "New York, NY" as a pro', () => {
+    const store = configureStore({ reducer: reducer });
+    const { getByText } = render(
+      <Provider store={store}>
+        <CitizenshipMapSingleOffice office={'New York, NY'} />
+      </Provider>
+    );
+    const title = getByText(/new york, ny/i);
+    expect(title.textContent).toEqual(
+      "Showing: Rates of 'granted' case decision by nationality of origin, for New York, NY"
     );
   });
 });
