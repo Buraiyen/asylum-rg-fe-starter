@@ -26,14 +26,14 @@ function GraphWrapper(props) {
   }
   let map_to_render;
   if (!office) {
+    updateStateWithNewData(
+      test_data[0].yearResults,
+      view,
+      'any',
+      setVisualizationData
+    );
     switch (view) {
       case 'time-series':
-        updateStateWithNewData(
-          test_data[0].yearResults,
-          view,
-          'any',
-          setVisualizationData
-        );
         map_to_render = <TimeSeriesAll />;
         break;
       case 'office-heat-map':
@@ -46,6 +46,12 @@ function GraphWrapper(props) {
         break;
     }
   } else {
+    updateStateWithNewData(
+      test_data[0].yearResults,
+      view,
+      office,
+      setVisualizationData
+    );
     switch (view) {
       case 'time-series':
         map_to_render = <TimeSeriesSingleOffice office={office} />;
