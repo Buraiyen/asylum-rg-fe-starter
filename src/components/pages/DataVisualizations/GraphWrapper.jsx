@@ -13,6 +13,7 @@ import { resetVisualizationQuery } from '../../../state/actionCreators';
 import test_data from '../../../data/test_data.json';
 import { colors } from '../../../styles/data_vis_colors';
 import ScrollToTopOnMount from '../../../utils/scrollToTopOnMount';
+import { setVisualizationData } from '../../../state/actionCreators';
 
 const { background_color } = colors;
 
@@ -24,9 +25,16 @@ function GraphWrapper(props) {
     view = 'time-series';
   }
   let map_to_render;
+  console.log(test_data[0]);
   if (!office) {
     switch (view) {
       case 'time-series':
+        updateStateWithNewData(
+          test_data[0].yearResults,
+          view,
+          'any',
+          setVisualizationData
+        );
         map_to_render = <TimeSeriesAll />;
         break;
       case 'office-heat-map':
@@ -72,39 +80,41 @@ function GraphWrapper(props) {
                                    -- Mack 
     
     */
+    stateSettingCallback(view, office, test_data);
 
-    if (office === 'all' || !office) {
-      axios
-        .get(process.env.REACT_APP_API_URI, {
-          // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
-          params: {
-            from: years[0],
-            to: years[1],
-          },
-        })
-        .then(result => {
-          stateSettingCallback(view, office, test_data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    } else {
-      axios
-        .get(process.env.REACT_APP_API_URI, {
-          // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
-          params: {
-            from: years[0],
-            to: years[1],
-            office: office,
-          },
-        })
-        .then(result => {
-          stateSettingCallback(view, office, test_data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    }
+    // Save for ticket 3
+    // axios
+    //   .get(process.env.REACT_APP_API_URI, {
+    //     // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
+    //     params: {
+    //       from: years[0],
+    //       to: years[1],
+    //     },
+    //   })
+    //   .then(result => {
+    //     console.log('SUCCESS');
+    //     stateSettingCallback(view, office, test_data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+    //   })
+    //   .catch(err => {
+    //     console.log('FAIL');
+    //     console.error(err);
+    //   });
+    // } else {
+    //   axios
+    //     .get(process.env.REACT_APP_API_URI, {
+    //       // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
+    //       params: {
+    //         from: years[0],
+    //         to: years[1],
+    //         office: office,
+    //       },
+    //     })
+    //     .then(result => {
+    //       stateSettingCallback(view, office, test_data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+    //     })
+    //     .catch(err => {
+    //       console.error(err);
+    //     });
   }
   const clearQuery = (view, office) => {
     dispatch(resetVisualizationQuery(view, office));
