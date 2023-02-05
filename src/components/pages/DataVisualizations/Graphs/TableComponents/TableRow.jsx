@@ -17,25 +17,24 @@ function TableRow(props) {
       }}
     >
       {columns.map((property, idx) => {
-        if (row) {
-          if (typeof row[property] === 'object') {
-            return (
-              <SubTable
-                key={idx}
-                dataObject={row[property]}
-                rowHeight={rowHeight} // so for the SubTablesTable the row should be an object of objects
+        if (!row) return <></>;
+        if (typeof row[property] === 'object') {
+          return (
+            <SubTable
+              key={idx}
+              dataObject={row[property]}
+              rowHeight={rowHeight} // so for the SubTablesTable the row should be an object of objects
+            />
+          );
+        } else {
+          return (
+            <div style={{ overflow: 'hidden', flex: '1' }} key={idx}>
+              <TableInnerSquare
+                innerData={row[property]}
+                rowHeight={rowHeight}
               />
-            );
-          } else {
-            return (
-              <div style={{ overflow: 'hidden', flex: '1' }} key={idx}>
-                <TableInnerSquare
-                  innerData={row[property]}
-                  rowHeight={rowHeight}
-                />
-              </div>
-            );
-          }
+            </div>
+          );
         }
       })}
     </div>
