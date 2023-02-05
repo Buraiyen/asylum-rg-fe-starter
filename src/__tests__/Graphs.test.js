@@ -1,11 +1,11 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import reducer from '../state/reducers';
 import TimeSeriesAll from '../components/pages/DataVisualizations/Graphs/TimeSeriesAll';
 import TimeSeriesSingleOffice from '../components/pages/DataVisualizations/Graphs/TimeSeriesSingleOffice';
-import CitizenshipMapAll from '../components/pages/DataVisualizations/Graphs/CitizenshipMapAll';
+// import CitizenshipMapAll from '../components/pages/DataVisualizations/Graphs/CitizenshipMapAll';
 import CitizenshipMapSingleOffice from '../components/pages/DataVisualizations/Graphs/CitizenshipMapSingleOffice';
 import OfficeHeatMap from '../components/pages/DataVisualizations/Graphs/OfficeHeatMap';
 
