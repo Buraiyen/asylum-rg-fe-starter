@@ -7,6 +7,7 @@ import TimeSeriesAll from '../components/pages/DataVisualizations/Graphs/TimeSer
 import TimeSeriesSingleOffice from '../components/pages/DataVisualizations/Graphs/TimeSeriesSingleOffice';
 import CitizenshipMapAll from '../components/pages/DataVisualizations/Graphs/CitizenshipMapAll';
 import CitizenshipMapSingleOffice from '../components/pages/DataVisualizations/Graphs/CitizenshipMapSingleOffice';
+import OfficeHeatMap from '../components/pages/DataVisualizations/Graphs/OfficeHeatMap';
 
 beforeEach(() => {
   jest.spyOn(console, 'error');
@@ -100,5 +101,20 @@ describe('CitizenshipMap test suite', () => {
         </Provider>
       );
     }).toThrow("Cannot read property 'citizenshipMapData' of undefined");
+  });
+});
+
+describe('<OfficeHeatMap /> test suite', () => {
+  test('<OfficeHeatMap /> renders correctly', () => {
+    const store = configureStore({ reducer: reducer });
+    const { getByText } = render(
+      <Provider store={store}>
+        <OfficeHeatMap />
+      </Provider>
+    );
+    const title = getByText(/rates of 'granted'/i);
+    expect(title.textContent).toEqual(
+      "Showing: Rates of 'granted' case decision by asylum office, by year"
+    );
   });
 });
