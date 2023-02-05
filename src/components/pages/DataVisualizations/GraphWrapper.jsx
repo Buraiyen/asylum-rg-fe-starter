@@ -25,7 +25,6 @@ function GraphWrapper(props) {
     view = 'time-series';
   }
   let map_to_render;
-  console.log(test_data[0]);
   if (!office) {
     switch (view) {
       case 'time-series':
