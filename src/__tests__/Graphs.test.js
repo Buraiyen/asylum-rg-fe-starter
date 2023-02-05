@@ -5,6 +5,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import reducer from '../state/reducers';
 import TimeSeriesAll from '../components/pages/DataVisualizations/Graphs/TimeSeriesAll';
 import TimeSeriesSingleOffice from '../components/pages/DataVisualizations/Graphs/TimeSeriesSingleOffice';
+import CitizenshipMapAll from '../components/pages/DataVisualizations/Graphs/CitizenshipMapAll';
 
 describe('TimeSeries test suite', () => {
   beforeEach(() => {
@@ -57,5 +58,22 @@ describe('TimeSeries test suite', () => {
         </Provider>
       );
     }).toThrow("Cannot read property 'timeSeriesData' of undefined");
+  });
+});
+
+describe('CitizenshipMap test suite', () => {
+  test('<CitizenshipMapAll /> renders correctly', () => {
+    const store = configureStore({ reducer: reducer });
+    const { getByText } = render(
+      <Provider store={store}>
+        <CitizenshipMapAll />
+      </Provider>
+    );
+    const title = getByText(
+      /showing: rates of 'granted' case decision by nationality of origin, for all offices/i
+    );
+    expect(title.textContent).toEqual(
+      "Showing: Rates of 'granted' case decision by nationality of origin, for all offices"
+    );
   });
 });
