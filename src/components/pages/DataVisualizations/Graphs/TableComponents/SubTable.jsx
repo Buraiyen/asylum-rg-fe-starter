@@ -22,6 +22,7 @@ function SubTable(props) {
               flex: '1',
               overflow: 'hidden',
             }}
+            key={idx}
           >
             <TableInnerSquare rowHeight={rowHeight} innerData={entry[0]} />
             <TableInnerSquare rowHeight={rowHeight} innerData={entry[1]} />

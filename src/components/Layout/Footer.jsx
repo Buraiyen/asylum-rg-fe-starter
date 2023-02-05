@@ -53,13 +53,14 @@ function SubFooter() {
       }}
     >
       <Space direction="horizontal">
-        {Object.entries(button_links_by_text).map(text_link_pair => {
+        {Object.entries(button_links_by_text).map((text_link_pair, idx) => {
           return (
             <Button
               type="text"
               size="small"
               href={text_link_pair[1]}
               style={{ color: 'white' }}
+              key={idx}
             >
               {text_link_pair[0]}
             </Button>

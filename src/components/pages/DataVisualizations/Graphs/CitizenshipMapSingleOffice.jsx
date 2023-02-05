@@ -111,7 +111,7 @@ function CitizenshipMapSingleOffice(props) {
       <select name="regionSelect" onChange={handleScopeChange}>
         {geoScopeArray.map((a, i) => {
           return (
-            <option key={i} value={a}>
+            <option value={a} key={i}>
               {a.toUpperCase()}
             </option>
           );
