@@ -8,18 +8,18 @@ import TimeSeriesSingleOffice from '../components/pages/DataVisualizations/Graph
 import CitizenshipMapAll from '../components/pages/DataVisualizations/Graphs/CitizenshipMapAll';
 import CitizenshipMapSingleOffice from '../components/pages/DataVisualizations/Graphs/CitizenshipMapSingleOffice';
 
+beforeEach(() => {
+  jest.spyOn(console, 'error');
+  // @ts-ignore jest.spyOn adds this functionallity
+  console.error.mockImplementation(() => null);
+});
+
+afterEach(() => {
+  // @ts-ignore jest.spyOn adds this functionallity
+  console.error.mockRestore();
+});
+
 describe('TimeSeries test suite', () => {
-  beforeEach(() => {
-    jest.spyOn(console, 'error');
-    // @ts-ignore jest.spyOn adds this functionallity
-    console.error.mockImplementation(() => null);
-  });
-
-  afterEach(() => {
-    // @ts-ignore jest.spyOn adds this functionallity
-    console.error.mockRestore();
-  });
-
   test('<TimeSeriesAll /> renders correctly', () => {
     const store = configureStore({ reducer: reducer });
     const { getByText } = render(
@@ -89,5 +89,16 @@ describe('CitizenshipMap test suite', () => {
     expect(title.textContent).toEqual(
       "Showing: Rates of 'granted' case decision by nationality of origin, for New York, NY"
     );
+  });
+
+  test('<CitizenshipMapSingleOffice /> fails to render when passing invalid data', () => {
+    const store = configureStore({ reducer: reducer });
+    expect(() => {
+      render(
+        <Provider store={store}>
+          <CitizenshipMapSingleOffice office={null} />
+        </Provider>
+      );
+    }).toThrow("Cannot read property 'citizenshipMapData' of undefined");
   });
 });
