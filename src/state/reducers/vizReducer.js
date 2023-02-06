@@ -158,6 +158,7 @@ const vizReducer = (state = initialState, action) => {
         }
       }
     case SET_VISUALIZATION_DATA:
+      console.log(action.payload.data);
       if (!action.payload.office) {
         switch (action.payload.view) {
           case 'time-series':

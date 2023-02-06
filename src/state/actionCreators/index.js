@@ -9,7 +9,6 @@ import {
   SET_VISUALIZATION_DATA,
   RESET_VISUALIZATION_QUERY,
   SET_HEAT_MAP_YEARS,
-  GET_FILTERED_DATA,
 } from '../actionTypes';
 
 export const getFilteredData = years => {
