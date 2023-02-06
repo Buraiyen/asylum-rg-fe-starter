@@ -1,14 +1,25 @@
 /*Consider breaking this down into separate actionCreator files if it becomes overly crowded!
 Remember separation of concerns.
-Import the action-types and export an action-creator function for each.
-Each synchronous function should return an action object with a type and a payload -- these will be passed to the reducer.
+ith a type and a payload -- these will be passed to the reducer.Import the action-types and export an action-creator function for each.
+Each synchronous function should return an action object w
 Each asynchronous function should dispatch its action object (type/payload) to the reducer.
 */
+import axios from 'axios';
 import {
   SET_VISUALIZATION_DATA,
   RESET_VISUALIZATION_QUERY,
   SET_HEAT_MAP_YEARS,
+  GET_FILTERED_DATA,
 } from '../actionTypes';
+
+export const getFilteredData = years => {
+  axios.get(process.env.REACT_APP_API_URI).then(res => {
+    const filteredData = res.data.filter(item => {
+      return item.fiscal_year >= years[0] && item.fiscal_year <= years[1];
+    });
+    console.log(filteredData);
+  });
+};
 
 export const setVisualizationData = (view, office, data) => {
   return {
