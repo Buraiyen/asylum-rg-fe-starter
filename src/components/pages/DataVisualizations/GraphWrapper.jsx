@@ -105,7 +105,16 @@ function GraphWrapper(props) {
         axios
           .get(process.env.REACT_APP_API_URI + '/citizenshipSummary')
           .then(res => {
-            stateSettingCallback('citizenship', office, res.data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+            stateSettingCallback('citizenship', 'any', res.data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+          });
+      } else {
+        axios
+          .get(process.env.REACT_APP_API_URI + '/citizenshipSummary')
+          .then(res => {
+            console.log(res.data);
+            stateSettingCallback('citizenship', office, [
+              { citizenshipResults: res.data },
+            ]); // <-- `test_data` here can be simply replaced by `result.data` in prod!
           });
       }
     }
