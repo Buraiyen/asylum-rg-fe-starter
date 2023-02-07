@@ -11,15 +11,6 @@ import {
   SET_HEAT_MAP_YEARS,
 } from '../actionTypes';
 
-export const getFilteredData = years => {
-  axios.get(process.env.REACT_APP_API_URI).then(res => {
-    const filteredData = res.data.filter(item => {
-      return item.fiscal_year >= years[0] && item.fiscal_year <= years[1];
-    });
-    console.log(filteredData);
-  });
-};
-
 export const setVisualizationData = (view, office, data) => {
   return {
     type: SET_VISUALIZATION_DATA,

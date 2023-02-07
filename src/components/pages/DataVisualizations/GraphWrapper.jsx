@@ -74,14 +74,10 @@ function GraphWrapper(props) {
                                    -- Mack 
     
     */
-    // dispatch(getData(office, view));
-    // stateSettingCallback(view, office, test_data);
-    // Save for ticket 3
     if (view === 'time-series' || view === 'office-heat-map') {
       if (!office || office === 'any') {
         axios
           .get(process.env.REACT_APP_API_URI + '/fiscalSummary', {
-            // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
             params: {
               from: years[0],
               to: years[1],
@@ -95,16 +91,14 @@ function GraphWrapper(props) {
               return a.fiscal_year > b.fiscal_year;
             });
             formattedData[0].yearResults = sorted;
-            stateSettingCallback(view, office, formattedData); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+            stateSettingCallback(view, office, formattedData);
           })
           .catch(err => {
-            console.log('FAIL');
             console.error(err);
           });
       } else {
         axios
           .get(process.env.REACT_APP_API_URI + '/fiscalSummary', {
-            // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
             params: {
               from: years[0],
               to: years[1],
@@ -118,7 +112,7 @@ function GraphWrapper(props) {
               return a.fiscal_year > b.fiscal_year;
             });
             formattedData[0].yearResults = sorted;
-            stateSettingCallback(view, office, formattedData); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+            stateSettingCallback(view, office, formattedData);
           })
           .catch(err => {
             console.error(err);
@@ -129,7 +123,7 @@ function GraphWrapper(props) {
         axios
           .get(process.env.REACT_APP_API_URI + '/citizenshipSummary')
           .then(res => {
-            stateSettingCallback('citizenship', office, res.data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+            stateSettingCallback('citizenship', office, res.data);
           });
       }
     }
