@@ -9,14 +9,11 @@ import TimeSeriesSingleOffice from './Graphs/TimeSeriesSingleOffice';
 import YearLimitsSelect from './YearLimitsSelect';
 import ViewSelect from './ViewSelect';
 // import axios from 'axios';
-import test_data from '../../../data/test_data.json';
 import { resetVisualizationQuery } from '../../../state/actionCreators';
 import { colors } from '../../../styles/data_vis_colors';
 import ScrollToTopOnMount from '../../../utils/scrollToTopOnMount';
 import { setVisualizationData } from '../../../state/actionCreators';
-import { getData } from '../../../state/actionCreators';
 import axios from 'axios';
-import { waitFor } from '@testing-library/dom';
 const { background_color } = colors;
 
 function GraphWrapper(props) {
@@ -28,7 +25,7 @@ function GraphWrapper(props) {
   }
   let map_to_render;
   if (!office) {
-    updateStateWithNewData([2017, 2022], view, 'any', setVisualizationData);
+    updateStateWithNewData([2015, 2022], view, 'any', setVisualizationData);
     switch (view) {
       case 'time-series':
         map_to_render = <TimeSeriesAll />;
@@ -91,9 +88,13 @@ function GraphWrapper(props) {
           },
         })
         .then(result => {
-          console.log('SUCCESS');
-          console.log([result.data]);
-          stateSettingCallback(view, office, [result.data]); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+          let formattedData = [result.data];
+          // sorting data by fiscal_year
+          const sorted = formattedData[0].yearResults.sort((a, b) => {
+            return a.fiscal_year > b.fiscal_year;
+          });
+          formattedData[0].yearResults = sorted;
+          stateSettingCallback(view, office, formattedData); // <-- `test_data` here can be simply replaced by `result.data` in prod!
         })
         .catch(err => {
           console.log('FAIL');
