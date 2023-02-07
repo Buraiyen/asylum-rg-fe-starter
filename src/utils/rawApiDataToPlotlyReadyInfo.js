@@ -169,9 +169,9 @@ const rawApiDataToPlotlyReadyInfo = (view, office, data) => {
           rowItem = {
             Citizenship: item.citizenship,
             'Total Cases': item.totalCases,
-            '% Granted': Number(item.granted).toFixed(2),
+            '% Granted': Number(item.granted * 100).toFixed(2),
             '% Admin Close / Dismissal': Number(item.adminClosed).toFixed(2),
-            '% Denied': Number(item.denied).toFixed(2),
+            '% Denied': Number(item.denied / 10).toFixed(2),
           };
           rowsForTable.push(rowItem);
         }
