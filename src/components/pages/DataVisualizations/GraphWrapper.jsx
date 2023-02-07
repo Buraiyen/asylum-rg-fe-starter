@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import CitizenshipMapAll from './Graphs/CitizenshipMapAll';
@@ -8,11 +7,9 @@ import OfficeHeatMap from './Graphs/OfficeHeatMap';
 import TimeSeriesSingleOffice from './Graphs/TimeSeriesSingleOffice';
 import YearLimitsSelect from './YearLimitsSelect';
 import ViewSelect from './ViewSelect';
-// import axios from 'axios';
 import { resetVisualizationQuery } from '../../../state/actionCreators';
 import { colors } from '../../../styles/data_vis_colors';
 import ScrollToTopOnMount from '../../../utils/scrollToTopOnMount';
-import { setVisualizationData } from '../../../state/actionCreators';
 import axios from 'axios';
 const { background_color } = colors;
 
@@ -23,9 +20,9 @@ function GraphWrapper(props) {
     set_view('time-series');
     view = 'time-series';
   }
+
   let map_to_render;
   if (!office) {
-    updateStateWithNewData([2015, 2022], view, 'any', setVisualizationData);
     switch (view) {
       case 'time-series':
         map_to_render = <TimeSeriesAll />;
@@ -40,7 +37,6 @@ function GraphWrapper(props) {
         break;
     }
   } else {
-    updateStateWithNewData([2015, 2022], view, office, setVisualizationData);
     switch (view) {
       case 'time-series':
         map_to_render = <TimeSeriesSingleOffice office={office} />;
@@ -52,18 +48,12 @@ function GraphWrapper(props) {
         break;
     }
   }
+
   function updateStateWithNewData(years, view, office, stateSettingCallback) {
     if (view === 'time-series' || view === 'office-heat-map') {
       if (!office || office === 'any') {
         axios
-          .get(process.env.REACT_APP_API_URI + '/fiscalSummary', {
-            // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
-            params: {
-              from: years[0],
-              to: years[1],
-              office: 'any',
-            },
-          })
+          .get(process.env.REACT_APP_API_URI + '/fiscalSummary')
           .then(result => {
             let formattedData = [result.data];
             // sorting data by fiscal_year
@@ -71,7 +61,7 @@ function GraphWrapper(props) {
               return a.fiscal_year > b.fiscal_year;
             });
             formattedData[0].yearResults = sorted;
-            stateSettingCallback(view, office, formattedData); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+            stateSettingCallback(view, office, formattedData);
           })
           .catch(err => {
             console.log('FAIL');
@@ -79,14 +69,7 @@ function GraphWrapper(props) {
           });
       } else {
         axios
-          .get(process.env.REACT_APP_API_URI + '/fiscalSummary', {
-            // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
-            params: {
-              from: years[0],
-              to: years[1],
-              office: office,
-            },
-          })
+          .get(process.env.REACT_APP_API_URI + '/fiscalSummary')
           .then(result => {
             let formattedData = [result.data];
             // sorting data by fiscal_year
@@ -94,7 +77,7 @@ function GraphWrapper(props) {
               return a.fiscal_year > b.fiscal_year;
             });
             formattedData[0].yearResults = sorted;
-            stateSettingCallback(view, office, formattedData); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+            stateSettingCallback(view, office, formattedData);
           })
           .catch(err => {
             console.error(err);
@@ -105,7 +88,7 @@ function GraphWrapper(props) {
         axios
           .get(process.env.REACT_APP_API_URI + '/citizenshipSummary')
           .then(res => {
-            stateSettingCallback('citizenship', 'any', res.data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+            stateSettingCallback('citizenship', 'any', res.data);
           });
       } else {
         axios
@@ -114,7 +97,7 @@ function GraphWrapper(props) {
             console.log(res.data);
             stateSettingCallback('citizenship', office, [
               { citizenshipResults: res.data },
-            ]); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+            ]);
           });
       }
     }
