@@ -88,13 +88,12 @@ function GraphWrapper(props) {
         axios
           .get(process.env.REACT_APP_API_URI + '/citizenshipSummary')
           .then(res => {
-            stateSettingCallback('citizenship', 'any', res.data);
+            stateSettingCallback('citizenship', office, res.data);
           });
       } else {
         axios
           .get(process.env.REACT_APP_API_URI + '/citizenshipSummary')
           .then(res => {
-            console.log(res.data);
             stateSettingCallback('citizenship', office, [
               { citizenshipResults: res.data },
             ]);
