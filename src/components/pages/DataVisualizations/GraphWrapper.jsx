@@ -102,7 +102,7 @@ function GraphWrapper(props) {
         });
     } else {
       axios
-        .get(process.env.REACT_APP_API_URI, {
+        .get(process.env.REACT_APP_API_URI + '/fiscalSummary', {
           // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
           params: {
             from: years[0],
@@ -111,7 +111,13 @@ function GraphWrapper(props) {
           },
         })
         .then(result => {
-          stateSettingCallback(view, office, [result.data]); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+          let formattedData = [result.data];
+          // sorting data by fiscal_year
+          const sorted = formattedData[0].yearResults.sort((a, b) => {
+            return a.fiscal_year > b.fiscal_year;
+          });
+          formattedData[0].yearResults = sorted;
+          stateSettingCallback(view, office, formattedData); // <-- `test_data` here can be simply replaced by `result.data` in prod!
         })
         .catch(err => {
           console.error(err);
