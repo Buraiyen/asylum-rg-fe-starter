@@ -116,9 +116,9 @@ describe('CitizenshipMap test suite', () => {
 });
 
 describe('<OfficeHeatMap /> test suite', () => {
-  test('<OfficeHeatMap /> renders correctly', () => {
+  test('<OfficeHeatMap /> renders correctly', async () => {
     const store = configureStore({ reducer: reducer });
-    const { getByText } = render(
+    const { getByText, getByTestId } = render(
       <Provider store={store}>
         <OfficeHeatMap />
       </Provider>
@@ -127,5 +127,8 @@ describe('<OfficeHeatMap /> test suite', () => {
     expect(title.textContent).toEqual(
       "Showing: Rates of 'granted' case decision by asylum office, by year"
     );
+
+    const data = await waitFor(() => getByTestId(/rows-container/i));
+    expect(data).not.toBeNull();
   });
 });
