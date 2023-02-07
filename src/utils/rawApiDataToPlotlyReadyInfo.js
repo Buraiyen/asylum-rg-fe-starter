@@ -69,7 +69,7 @@ const rawApiDataToPlotlyReadyInfo = (view, office, data) => {
             'Total Cases': yearResults.totalCases,
             '% Granted': Number(yearResults.granted * 100).toFixed(2),
             '% Admin Close / Dismissal': Number(
-              yearResults.adminClosed
+              yearResults.adminClosed / 10
             ).toFixed(2),
             '% Denied': Number(
               (yearResults.denied / yearResults.totalCases) * 100
