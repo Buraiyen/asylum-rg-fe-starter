@@ -47,7 +47,7 @@ function Table(props) {
           );
         })}
       </div>
-      <div className="rows-container">
+      <div className="rows-container" data-testid="rows-container">
         {rows.map((row, idx) => {
           return (
             <TableRow

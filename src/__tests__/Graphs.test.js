@@ -1,5 +1,6 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import axios from 'axios';
+import { render, waitFor, waitForElement } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import reducer from '../state/reducers';
@@ -8,6 +9,8 @@ import TimeSeriesSingleOffice from '../components/pages/DataVisualizations/Graph
 // import CitizenshipMapAll from '../components/pages/DataVisualizations/Graphs/CitizenshipMapAll';
 import CitizenshipMapSingleOffice from '../components/pages/DataVisualizations/Graphs/CitizenshipMapSingleOffice';
 import OfficeHeatMap from '../components/pages/DataVisualizations/Graphs/OfficeHeatMap';
+
+jest.mock('axios');
 
 beforeEach(() => {
   jest.spyOn(console, 'error');
@@ -34,6 +37,18 @@ describe('TimeSeries test suite', () => {
     expect(title.textContent).toEqual(
       'Showing: Time series data for all USCIS Asylum Offices'
     );
+  });
+
+  test('<TimeSeriesAll /> renders data', async () => {
+    const store = configureStore({ reducer: reducer });
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <TimeSeriesAll />
+      </Provider>
+    );
+
+    const data = await waitFor(() => getByTestId(/rows-container/i));
+    expect(data).not.toBeNull();
   });
 
   test('<TimeSeriesSingleOffice /> renders correctly when passing "New York, NY" as a prop', () => {
