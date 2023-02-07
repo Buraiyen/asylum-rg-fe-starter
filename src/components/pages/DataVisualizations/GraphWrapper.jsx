@@ -40,7 +40,7 @@ function GraphWrapper(props) {
         break;
     }
   } else {
-    updateStateWithNewData([2017, 2022], view, office, setVisualizationData);
+    updateStateWithNewData([2015, 2022], view, office, setVisualizationData);
     switch (view) {
       case 'time-series':
         map_to_render = <TimeSeriesSingleOffice office={office} />;
@@ -77,51 +77,61 @@ function GraphWrapper(props) {
     // dispatch(getData(office, view));
     // stateSettingCallback(view, office, test_data);
     // Save for ticket 3
-    if (!office) {
-      axios
-        .get(process.env.REACT_APP_API_URI + '/fiscalSummary', {
-          // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
-          params: {
-            from: years[0],
-            to: years[1],
-            office: 'any',
-          },
-        })
-        .then(result => {
-          let formattedData = [result.data];
-          // sorting data by fiscal_year
-          const sorted = formattedData[0].yearResults.sort((a, b) => {
-            return a.fiscal_year > b.fiscal_year;
+    if (view === 'time-series' || view === 'office-heat-map') {
+      if (!office || office === 'any') {
+        axios
+          .get(process.env.REACT_APP_API_URI + '/fiscalSummary', {
+            // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
+            params: {
+              from: years[0],
+              to: years[1],
+              office: 'any',
+            },
+          })
+          .then(result => {
+            let formattedData = [result.data];
+            // sorting data by fiscal_year
+            const sorted = formattedData[0].yearResults.sort((a, b) => {
+              return a.fiscal_year > b.fiscal_year;
+            });
+            formattedData[0].yearResults = sorted;
+            stateSettingCallback(view, office, formattedData); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+          })
+          .catch(err => {
+            console.log('FAIL');
+            console.error(err);
           });
-          formattedData[0].yearResults = sorted;
-          stateSettingCallback(view, office, formattedData); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-        })
-        .catch(err => {
-          console.log('FAIL');
-          console.error(err);
-        });
-    } else {
-      axios
-        .get(process.env.REACT_APP_API_URI + '/fiscalSummary', {
-          // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
-          params: {
-            from: years[0],
-            to: years[1],
-            office: office,
-          },
-        })
-        .then(result => {
-          let formattedData = [result.data];
-          // sorting data by fiscal_year
-          const sorted = formattedData[0].yearResults.sort((a, b) => {
-            return a.fiscal_year > b.fiscal_year;
+      } else {
+        axios
+          .get(process.env.REACT_APP_API_URI + '/fiscalSummary', {
+            // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
+            params: {
+              from: years[0],
+              to: years[1],
+              office: office,
+            },
+          })
+          .then(result => {
+            let formattedData = [result.data];
+            // sorting data by fiscal_year
+            const sorted = formattedData[0].yearResults.sort((a, b) => {
+              return a.fiscal_year > b.fiscal_year;
+            });
+            formattedData[0].yearResults = sorted;
+            stateSettingCallback(view, office, formattedData); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+          })
+          .catch(err => {
+            console.error(err);
           });
-          formattedData[0].yearResults = sorted;
-          stateSettingCallback(view, office, formattedData); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-        })
-        .catch(err => {
-          console.error(err);
-        });
+      }
+    } else if (view === 'citizenship') {
+      if (!office || office === 'any') {
+        axios
+          .get(process.env.REACT_APP_API_URI + '/citizenshipSummary')
+          .then(res => {
+            stateSettingCallback('citizenship', office, res.data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+          });
+      }
     }
   }
   const clearQuery = (view, office) => {
