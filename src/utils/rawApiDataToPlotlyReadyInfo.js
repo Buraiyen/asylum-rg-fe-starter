@@ -200,16 +200,23 @@ const rawApiDataToPlotlyReadyInfo = (view, office, data) => {
             rowItem = {
               'Fiscal Year': data[0].yearResults[i].fiscal_year,
               'Total Cases': officeObj.totalCases,
-              '% Granted': Number(officeObj.granted).toFixed(2),
+              '% Granted': Number(officeObj.granted * 100).toFixed(2),
               '% Admin Close / Dismissal': Number(
                 officeObj.adminClosed
               ).toFixed(2),
-              '% Denied': Number(officeObj.denied).toFixed(2),
+              '% Denied': Number(officeObj.denied / 10).toFixed(2),
             };
             rowsForTable.push(rowItem);
           }
         }
+
+        // Convert the percentages to display on graph
         const singleOfficeDataObject = officeData[office];
+        const modifiedDataObject =
+          singleOfficeDataObject.yTotalPercentGranteds.map(num => {
+            return num * 100;
+          });
+        singleOfficeDataObject.yTotalPercentGranteds = modifiedDataObject;
         return {
           rowsForTable,
           singleOfficeDataObject,
