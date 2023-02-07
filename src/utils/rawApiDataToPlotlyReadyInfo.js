@@ -77,12 +77,6 @@ const rawApiDataToPlotlyReadyInfo = (view, office, data) => {
           };
           rowsForAllDisplay.push(rowItem);
         }
-
-        // const rowsSorted = rowsForAllDisplay.sort((a, b) => {
-        //   return a['Fiscal Year'] > b['Fiscal Year'];
-        // });
-
-        // console.log(rowsSorted);
         const finalData = {
           xYears: [],
           totals: [],
@@ -97,10 +91,7 @@ const rawApiDataToPlotlyReadyInfo = (view, office, data) => {
           finalData['totalPercentAdminCloseds'].push(officeName['adminClosed']);
           finalData['totalPercentDenieds'].push(officeName['denied']);
         }
-        // const sorted = finalData['xYears'].sort((a, b) => {
-        //   return a > b;
-        // });
-        // finalData.xYears = sorted;
+
         return { ...finalData, rowsForAllDisplay, officeData };
 
       case 'office-heat-map':
